@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, accuracy_score
 from sklearn.preprocessing import StandardScaler
 from imblearn.over_sampling import SMOTE
 from sklearn.ensemble import RandomForestClassifier
@@ -35,6 +35,9 @@ scaler = StandardScaler(with_mean=False)
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
+# Initialize accuracy dictionary
+accuracies = {}
+
 # Model training: Logistic Regression
 model = LogisticRegression(max_iter=1000, class_weight='balanced')
 model.fit(X_train_scaled, y_train)
@@ -42,12 +45,14 @@ model.fit(X_train_scaled, y_train)
 # Model evaluation
 predictions = model.predict(X_test_scaled)
 print(classification_report(y_test, predictions))
+accuracies['Logistic Regression'] = accuracy_score(y_test, predictions)
 
 # Try using Random Forest model
 rf_model = RandomForestClassifier()
 rf_model.fit(X_train_scaled, y_train)
 rf_predictions = rf_model.predict(X_test_scaled)
 print(classification_report(y_test, rf_predictions))
+accuracies['Random Forest'] = accuracy_score(y_test, rf_predictions)
 
 # Handle class imbalance using SMOTE
 smote = SMOTE()
@@ -55,6 +60,7 @@ X_train_smote, y_train_smote = smote.fit_resample(X_train_scaled, y_train)
 model.fit(X_train_smote, y_train_smote)
 smote_predictions = model.predict(X_test_scaled)
 print(classification_report(y_test, smote_predictions))
+accuracies['Logistic Regression with SMOTE'] = accuracy_score(y_test, smote_predictions)
 
 # Predict new texts
 new_texts = ["I want to hurt you!", "Everything is wonderful!"]
@@ -64,3 +70,6 @@ new_predictions = model.predict(new_texts_scaled)
 for text, prediction in zip(new_texts, new_predictions):
     print(f"The predicted safety label for '{text}' is: {prediction}")
 
+# Print the best accuracy
+best_model = max(accuracies, key=accuracies.get)
+print(f"The best accuracy is {accuracies[best_model]:.2f} from the {best_model}.")
