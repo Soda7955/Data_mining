@@ -1,7 +1,9 @@
 # Data_mining
 
-This is my python code for Data Mining Project.\\
-Text recognition (train.py)\\
+This is my python code for Data Mining Project.
+
+Text recognition (train.py)
+
 Facial recognition based on Vggnet and resnet using CK+ datasets
 
 First, data augmentation methods are used to prepare the training and testing data, where the training data is enhanced through random cropping and horizontal flipping, while the testing data employs 10-crop augmentation. Then, the loss function is defined as cross-entropy loss (nn.CrossEntropyLoss), and the optimizer is set as stochastic gradient descent (optim.SGD) with momentum.
