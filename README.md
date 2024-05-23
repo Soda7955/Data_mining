@@ -1,6 +1,6 @@
 # Data_mining
 
-This is my python code for Facial recognition based on CK+
+This is my python code for Facial recognition based on Vggnet and resnet using CK+ datasets. However, my entire project proposal is a multimodal machine learning that integrates text recognition and facial recognition. Text recognition content is implemented in weka.
 
 First, data augmentation methods are used to prepare the training and testing data, where the training data is enhanced through random cropping and horizontal flipping, while the testing data employs 10-crop augmentation. Then, the loss function is defined as cross-entropy loss (nn.CrossEntropyLoss), and the optimizer is set as stochastic gradient descent (optim.SGD) with momentum.
 
